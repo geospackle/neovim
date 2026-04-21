@@ -26,8 +26,7 @@ end)
 vim.keymap.set('n', '<leader>sd', function() vim.diagnostic.open_float() end)
 vim.keymap.set('n', 'td', function() vim.lsp.buf.hover() end)
 vim.keymap.set('n', ',coa', function() vim.lsp.buf.code_action() end)
-vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float)
-
+vim.keymap.set('n', ',rns', function() vim.lsp.buf.rename() end)
 vim.keymap.set('n', '<F2>', '<Cmd>Neotree toggle<CR>')
 
 vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })

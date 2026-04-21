@@ -16,16 +16,16 @@ local vimrc = vim.fn.stdpath("config") .. "/vimrc.vim"
 vim.cmd.source(vimrc)
 require('lazy').setup({
     --{
-        --"jackMort/ChatGPT.nvim",
-        --config = function()
-            --require("chatgpt").setup()
-        --end,
-        --dependencies = {
-            --"MunifTanjim/nui.nvim",
-            --"nvim-lua/plenary.nvim",
-            --"folke/trouble.nvim",
-            --"nvim-telescope/telescope.nvim"
-        --}
+    --"jackMort/ChatGPT.nvim",
+    --config = function()
+    --require("chatgpt").setup()
+    --end,
+    --dependencies = {
+    --"MunifTanjim/nui.nvim",
+    --"nvim-lua/plenary.nvim",
+    --"folke/trouble.nvim",
+    --"nvim-telescope/telescope.nvim"
+    --}
     --},
     {
         'nvim-telescope/telescope.nvim',
@@ -77,7 +77,7 @@ require('lazy').setup({
         branch = "v3.x",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "kyazdani42/nvim-web-devicons", -- recommended
+            "nvim-tree/nvim-web-devicons", -- recommended
             "MunifTanjim/nui.nvim",
             -- "3rd/image.nvim", -- Optional image support
         }
@@ -143,4 +143,9 @@ require('keybindings')
 require('plugins')
 require('functions')
 require('configs')
+require('lsp')
 vim.cmd('colorscheme gruvbox')
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { underline = false })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { underline = false })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { underline = false })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { underline = false })

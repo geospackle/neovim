@@ -136,7 +136,7 @@ nnoremap ,c :Codi!!<CR>
 " search visual selection
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
-nnoremap ,rc :tabnew ~/.config/nvim/vimrc.vim<CR> :vsplit ~/.config/nvim/init.lua<CR> :vsplit ~/.config/nvim/lua/keybindings.lua<CR>
+nnoremap ,rc :tabnew ~/.config/nvim/vimrc.vim<CR> :vsplit ~/.config/nvim/init.lua<CR> :vsplit ~/.config/nvim/lua/keybindings.lua<CR> :lcd ~/.config/nvim<CR>
 nnoremap ,src :luafile ~/.config/nvim/init.lua<CR>
 
 "vim-surround
@@ -167,7 +167,7 @@ map yui <Plug>MarkersCloseAllAndJumpToLast
 
 "nnoremap <Leader>l :let word=expand('<cword>')<CR> | :execute 'put! =printf(''console.log(%s)'', word)'
 nnoremap ,ri :VtrOpenRunner {'orientation': 'v', 'percentage': 30, 'cmd': 'ipython\ --no-autoindent'}<CR><CR>
-noremap ,cdc :call VtrGoToCurrentDir()<CR>
+noremap ,cdc :call VtgGoToCurrentDir()<CR>
 noremap ,cdw :call VtrGoToWorkingDir()<CR>
 noremap ,rt :VtrSendCommandToRunner !!<CR>
 noremap ,rr :VtrSendCommandToRunner ''<CR>

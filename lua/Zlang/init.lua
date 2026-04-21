@@ -7,7 +7,7 @@ local on_attach = function(client, bufnr)
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Mappings.
-    local opts = { noremap=true, silent=true }
+    local opts = { noremap = true, silent = true }
     buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
     buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -49,26 +49,26 @@ end
 
 
 local nvim_lsp = require('lspconfig')
-require'snippets'.use_suggested_mappings(true) -- for snippets.vim
+require 'snippets'.use_suggested_mappings(true) -- for snippets.vim
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- Code actions
 capabilities.textDocument.codeAction = {
-  dynamicRegistration = false;
-      codeActionLiteralSupport = {
-          codeActionKind = {
-              valueSet = {
-                 "",
-                 "quickfix",
-                 "refactor",
-                 "refactor.extract",
-                 "refactor.inline",
-                 "refactor.rewrite",
-                 "source",
-                 "source.organizeImports",
-              };
-          };
-      };
+    dynamicRegistration = false,
+    codeActionLiteralSupport = {
+        codeActionKind = {
+            valueSet = {
+                "",
+                "quickfix",
+                "refactor",
+                "refactor.extract",
+                "refactor.inline",
+                "refactor.rewrite",
+                "source",
+                "source.organizeImports",
+            },
+        },
+    },
 }
 
 -- Snippets
@@ -77,24 +77,44 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true;
 -- LSPs
 local servers = { "pyright", "rust_analyzer", "gopls", "tsserver" }
 for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup { 
-        capabilities = capabilities;
-        on_attach = on_attach;
+    nvim_lsp[lsp].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
         init_options = {
             onlyAnalyzeProjectsWithOpenFiles = true,
             suggestFromUnimportedLibraries = false,
             closingLabels = true,
-        };
+        },
     }
 end
 
 -- Lua LSP. NOTE: This replaces the calls where you would have before done `require('nvim_lsp').sumneko_lua.setup()`
 require('nlua.lsp.nvim').setup(require('lspconfig'), {
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
     init_options = {
         onlyAnalyzeProjectsWithOpenFiles = true,
         suggestFromUnimportedLibraries = false,
         closingLabels = true,
-    };
+    },
 })
+
+local lsp = require('lsp-zero').preset({})
+lsp.on_attach(function(client, bufnr)
+    -- see :help lsp-zero-keybindings
+    -- to learn the available actions
+    lsp.default_keymaps({ buffer = bufnr })
+end)
+
+lsp.setup()
+-- When you don't have mason.nvim installed
+-- You'll need to list the servers installed in your system
+--lsp.setup_servers({'tsserver', 'eslint', 'gopls'})
+-- (Optional) Configure lua language server for neovim
+require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+require 'lspconfig'.pyright.setup {
+    settings = { python = { typeCheckingMode = "off", diagnosticMode = "off" } },
+    root_dir = function()
+        return vim.fn.getcwd()
+    end,
+}
